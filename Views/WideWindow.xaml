@@ -1,0 +1,95 @@
+<Window x:Class="Window_Alert_App.Views.WideWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:controls="clr-namespace:Window_Alert_App.Controls"
+        Title="Window Alert App"
+        Width="880" Height="580"
+        MinWidth="700" MinHeight="450"
+        Background="{DynamicResource WidgetBgBrush}"
+        WindowStartupLocation="CenterScreen">
+
+    <DockPanel>
+        <!-- 상단 툴바 -->
+        <Border DockPanel.Dock="Top"
+                Background="{DynamicResource WidgetBgBrush}"
+                BorderBrush="{DynamicResource WidgetBorderBrush}" BorderThickness="0,0,0,1"
+                Height="40">
+            <Grid Margin="12,0">
+                <TextBlock Text="Window Alert App"
+                           Foreground="{DynamicResource TextPrimaryBrush}"
+                           FontSize="13" FontWeight="SemiBold"
+                           VerticalAlignment="Center"/>
+                <StackPanel Orientation="Horizontal"
+                            HorizontalAlignment="Right"
+                            VerticalAlignment="Center">
+                    <Button Content="C" Style="{StaticResource ModeButtonStyle}"
+                            Click="SwitchToCompact_Click" ToolTip="Compact 모드" Margin="0,0,4,0"/>
+                    <Button Content="N" Style="{StaticResource ModeButtonStyle}"
+                            Click="SwitchToNormal_Click" ToolTip="Normal 모드" Margin="0,0,4,0"/>
+                    <Button Content="새로 고침" Style="{StaticResource ModeButtonStyle}"
+                            Click="Refresh_Click" FontSize="11" Margin="0,0,4,0"/>
+                    <Button Content="설정" Style="{StaticResource ModeButtonStyle}"
+                            Click="Settings_Click" FontSize="11"/>
+                </StackPanel>
+            </Grid>
+        </Border>
+
+        <!-- 메인 콘텐츠 -->
+        <Grid>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="320" MinWidth="260"/>
+                <ColumnDefinition Width="1"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+
+            <!-- 달력 패널 -->
+            <controls:CalendarGrid x:Name="WideCalGrid"
+                                   Grid.Column="0"
+                                   VerticalAlignment="Top"
+                                   Margin="8"
+                                   DateSelected="WideCalGrid_DateSelected"/>
+
+            <!-- 구분선 -->
+            <Border Grid.Column="1" Background="{DynamicResource WidgetBorderBrush}"/>
+
+            <!-- 일정 패널 -->
+            <Grid Grid.Column="2">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="44"/>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="48"/>
+                </Grid.RowDefinitions>
+
+                <!-- 날짜 헤더 -->
+                <Border Grid.Row="0"
+                        Background="{DynamicResource HoverBgBrush}"
+                        Padding="16,0">
+                    <TextBlock x:Name="PanelDateHeader"
+                               VerticalAlignment="Center"
+                               FontSize="14" FontWeight="SemiBold"
+                               Foreground="{DynamicResource TextPrimaryBrush}"/>
+                </Border>
+
+                <!-- 일정 목록 -->
+                <ScrollViewer Grid.Row="1"
+                              VerticalScrollBarVisibility="Auto"
+                              HorizontalScrollBarVisibility="Disabled"
+                              Margin="0">
+                    <StackPanel x:Name="WideEventPanel" Margin="16,8"/>
+                </ScrollViewer>
+
+                <!-- 추가 버튼 -->
+                <Border Grid.Row="2"
+                        BorderBrush="{DynamicResource WidgetBorderBrush}" BorderThickness="0,1,0,0"
+                        Padding="16,0">
+                    <Button Content="+ 일정 추가"
+                            Style="{StaticResource ModeButtonStyle}"
+                            Foreground="{DynamicResource AccentBrush}" FontSize="13"
+                            HorizontalAlignment="Left"
+                            VerticalAlignment="Center"
+                            Click="AddEvent_Click"/>
+                </Border>
+            </Grid>
+        </Grid>
+    </DockPanel>
+</Window>

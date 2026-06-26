@@ -1,0 +1,183 @@
+<Window x:Class="Window_Alert_App.Views.EventEditWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="일정 추가 / 수정"
+        WindowStyle="SingleBorderWindow"
+        ResizeMode="NoResize"
+        Width="380" SizeToContent="Height"
+        WindowStartupLocation="CenterScreen"
+        ShowInTaskbar="False"
+        Background="{DynamicResource WidgetBgBrush}">
+
+    <Window.Resources>
+        <Style x:Key="FieldLabel" TargetType="TextBlock">
+            <Setter Property="Foreground" Value="{DynamicResource TextPrimaryBrush}"/>
+            <Setter Property="FontSize" Value="11"/>
+            <Setter Property="VerticalAlignment" Value="Center"/>
+            <Setter Property="Margin" Value="0,0,8,0"/>
+            <Setter Property="Width" Value="36"/>
+        </Style>
+        <Style x:Key="InputBox" TargetType="TextBox">
+            <Setter Property="Background" Value="{DynamicResource PressedBgBrush}"/>
+            <Setter Property="Foreground" Value="{DynamicResource TextPrimaryBrush}"/>
+            <Setter Property="BorderBrush" Value="{DynamicResource WidgetBorderBrush}"/>
+            <Setter Property="BorderThickness" Value="1"/>
+            <Setter Property="Padding" Value="6,4"/>
+            <Setter Property="FontSize" Value="12"/>
+            <Setter Property="CaretBrush" Value="{DynamicResource TextPrimaryBrush}"/>
+        </Style>
+        <Style x:Key="InputComboBox" TargetType="ComboBox">
+            <Setter Property="Background" Value="{DynamicResource PressedBgBrush}"/>
+            <Setter Property="Foreground" Value="{DynamicResource TextPrimaryBrush}"/>
+            <Setter Property="BorderBrush" Value="{DynamicResource WidgetBorderBrush}"/>
+            <Setter Property="BorderThickness" Value="1"/>
+            <Setter Property="Padding" Value="6,4"/>
+            <Setter Property="FontSize" Value="12"/>
+        </Style>
+        <Style TargetType="ComboBoxItem">
+            <Setter Property="Background" Value="{DynamicResource PressedBgBrush}"/>
+            <Setter Property="Foreground" Value="{DynamicResource TextPrimaryBrush}"/>
+        </Style>
+        <Style x:Key="ActionButton" TargetType="Button">
+            <Setter Property="Padding" Value="20,6"/>
+            <Setter Property="FontSize" Value="12"/>
+            <Setter Property="BorderThickness" Value="0"/>
+            <Setter Property="Cursor" Value="Hand"/>
+        </Style>
+    </Window.Resources>
+
+    <StackPanel Margin="16">
+        <!-- 제목 -->
+        <Grid Margin="0,0,0,10">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+            <TextBlock Grid.Column="0" Text="제목" Style="{StaticResource FieldLabel}"/>
+            <TextBox Grid.Column="1" x:Name="TitleBox" Style="{StaticResource InputBox}"/>
+        </Grid>
+
+        <!-- 날짜 -->
+        <Grid Margin="0,0,0,10">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+            <TextBlock Grid.Column="0" Text="날짜" Style="{StaticResource FieldLabel}"/>
+            <DatePicker Grid.Column="1" x:Name="DatePicker"
+                        FontSize="12" SelectedDateFormat="Short">
+                <DatePicker.Resources>
+                    <Style TargetType="DatePickerTextBox">
+                        <Setter Property="Background" Value="{DynamicResource PressedBgBrush}"/>
+                        <Setter Property="Foreground" Value="{DynamicResource TextPrimaryBrush}"/>
+                        <Setter Property="BorderThickness" Value="0"/>
+                        <Setter Property="Padding" Value="2,0"/>
+                    </Style>
+                </DatePicker.Resources>
+                <DatePicker.Style>
+                    <Style TargetType="DatePicker">
+                        <Setter Property="Background" Value="{DynamicResource PressedBgBrush}"/>
+                        <Setter Property="Foreground" Value="{DynamicResource TextPrimaryBrush}"/>
+                        <Setter Property="BorderBrush" Value="{DynamicResource WidgetBorderBrush}"/>
+                        <Setter Property="BorderThickness" Value="1"/>
+                        <Setter Property="Padding" Value="4,2"/>
+                    </Style>
+                </DatePicker.Style>
+            </DatePicker>
+        </Grid>
+
+        <!-- 시작 시간 -->
+        <Grid Margin="0,0,0,10">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="8"/>
+                <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+            <TextBlock Grid.Column="0" Text="시작" Style="{StaticResource FieldLabel}"/>
+            <ComboBox Grid.Column="1" x:Name="StartHourBox"
+                      Style="{StaticResource InputComboBox}"/>
+            <TextBlock Grid.Column="3" Text=":" Foreground="{DynamicResource TextPrimaryBrush}"
+                       VerticalAlignment="Center" FontSize="14" FontWeight="Bold"/>
+            <TextBox Grid.Column="4" x:Name="StartMinuteBox"
+                     Style="{StaticResource InputBox}"
+                     MaxLength="2" TextAlignment="Center"
+                     KeyDown="MinuteBox_KeyDown"/>
+        </Grid>
+
+        <!-- 종료 시간 -->
+        <Grid Margin="0,0,0,10">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="8"/>
+                <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+            <TextBlock Grid.Column="0" Text="종료" Style="{StaticResource FieldLabel}"/>
+            <ComboBox Grid.Column="1" x:Name="EndHourBox"
+                      Style="{StaticResource InputComboBox}"/>
+            <TextBlock Grid.Column="3" Text=":" Foreground="{DynamicResource TextPrimaryBrush}"
+                       VerticalAlignment="Center" FontSize="14" FontWeight="Bold"/>
+            <TextBox Grid.Column="4" x:Name="EndMinuteBox"
+                     Style="{StaticResource InputBox}"
+                     MaxLength="2" TextAlignment="Center"
+                     KeyDown="MinuteBox_KeyDown"/>
+        </Grid>
+
+        <!-- 위치 -->
+        <Grid Margin="0,0,0,10">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+            <TextBlock Grid.Column="0" Text="위치" Style="{StaticResource FieldLabel}"/>
+            <TextBox Grid.Column="1" x:Name="LocationBox" Style="{StaticResource InputBox}"/>
+        </Grid>
+
+        <!-- 설명 -->
+        <Grid Margin="0,0,0,10">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+            <TextBlock Grid.Column="0" Text="설명" Style="{StaticResource FieldLabel}"
+                       VerticalAlignment="Top" Margin="0,4,8,0"/>
+            <TextBox Grid.Column="1" x:Name="DescriptionBox" Style="{StaticResource InputBox}"
+                     Height="60"
+                     AcceptsReturn="True" TextWrapping="Wrap" VerticalScrollBarVisibility="Auto"/>
+        </Grid>
+
+        <!-- 알림 -->
+        <Grid Margin="0,0,0,16">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+            <TextBlock Grid.Column="0" Text="알림" Style="{StaticResource FieldLabel}"/>
+            <ComboBox Grid.Column="1" x:Name="NotifyComboBox"
+                      Style="{StaticResource InputComboBox}">
+                <ComboBoxItem Content="없음" Tag="0"/>
+                <ComboBoxItem Content="5분 전" Tag="5"/>
+                <ComboBoxItem Content="10분 전" Tag="10" IsSelected="True"/>
+                <ComboBoxItem Content="15분 전" Tag="15"/>
+                <ComboBoxItem Content="30분 전" Tag="30"/>
+                <ComboBoxItem Content="1시간 전" Tag="60"/>
+                <ComboBoxItem Content="1일 전" Tag="1440"/>
+            </ComboBox>
+        </Grid>
+
+        <!-- 버튼 -->
+        <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
+            <Button x:Name="CancelBtn" Content="취소"
+                    Style="{StaticResource ActionButton}"
+                    Background="{DynamicResource HoverBgBrush}" Foreground="{DynamicResource TextPrimaryBrush}"
+                    Click="CancelBtn_Click" Margin="0,0,8,0"/>
+            <Button x:Name="SaveBtn" Content="저장"
+                    Style="{StaticResource ActionButton}"
+                    Background="{DynamicResource AccentBrush}" Foreground="White"
+                    Click="SaveBtn_Click"/>
+        </StackPanel>
+    </StackPanel>
+</Window>

@@ -1,0 +1,49 @@
+<UserControl x:Class="Window_Alert_App.Views.NormalView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:controls="clr-namespace:Window_Alert_App.Controls"
+             Width="320">
+
+    <Grid Background="Transparent">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="1"/>
+            <RowDefinition Height="32"/>
+        </Grid.RowDefinitions>
+
+        <!-- 달력 그리드 (모드 버튼은 CalendarGrid 헤더 옆에 놓을 수 없으므로 별도 오버레이) -->
+        <Grid Grid.Row="0">
+            <controls:CalendarGrid x:Name="CalGrid"
+                                   DisplayMonth="{Binding CalendarMonth}"
+                                   SelectedDate="{Binding SelectedDate, Mode=TwoWay}"
+                                   DateSelected="CalGrid_DateSelected"
+                                   Margin="0"/>
+
+            <!-- 모드 버튼 오버레이 (캘린더 헤더 오른쪽) -->
+            <StackPanel Orientation="Horizontal"
+                        HorizontalAlignment="Right" VerticalAlignment="Top"
+                        Height="30" Margin="0,0,4,0">
+                <Button Content="C" Style="{StaticResource ModeButtonStyle}"
+                        Command="{Binding SwitchModeCommand}" CommandParameter="Compact"
+                        VerticalAlignment="Center" Margin="0,0,2,0"/>
+                <Button Content="W" Style="{StaticResource ModeButtonStyle}"
+                        Command="{Binding SwitchModeCommand}" CommandParameter="Wide"
+                        VerticalAlignment="Center"/>
+            </StackPanel>
+
+        </Grid>
+
+        <!-- 구분선 -->
+        <Border Grid.Row="1" Background="{DynamicResource WidgetBorderBrush}"/>
+
+        <!-- 오늘 첫 일정 미리보기 (드래그 가능) -->
+        <Grid Grid.Row="2" Margin="8,0"
+              MouseLeftButtonDown="Header_DragMove" Cursor="SizeAll">
+            <TextBlock x:Name="PreviewText"
+                       VerticalAlignment="Center"
+                       FontSize="11"
+                       Foreground="{DynamicResource TextSecondaryBrush}"
+                       TextTrimming="CharacterEllipsis"/>
+        </Grid>
+    </Grid>
+</UserControl>
