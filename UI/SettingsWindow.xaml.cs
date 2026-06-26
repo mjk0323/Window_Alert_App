@@ -115,6 +115,11 @@ public partial class SettingsWindow : Window
         NormalRadio.IsChecked = _settings.Mode == WidgetMode.Normal;
         WideRadio.IsChecked = _settings.Mode == WidgetMode.Wide;
 
+        FontSmallRadio.IsChecked  = _settings.FontSizeLevel == -1;
+        FontMediumRadio.IsChecked = _settings.FontSizeLevel == 0;
+        FontLargeRadio.IsChecked  = _settings.FontSizeLevel == 1;
+        FontXLargeRadio.IsChecked = _settings.FontSizeLevel == 2;
+
         UpdateAuthStatus(_calendarService.IsAuthenticated);
     }
 
@@ -158,11 +163,16 @@ public partial class SettingsWindow : Window
                        : WideRadio.IsChecked == true ? WidgetMode.Wide
                        : WidgetMode.Normal;
         _settings.ThemeColor = _selectedTheme;
+        _settings.FontSizeLevel = FontSmallRadio.IsChecked == true ? -1
+                                 : FontLargeRadio.IsChecked == true ? 1
+                                 : FontXLargeRadio.IsChecked == true ? 2
+                                 : 0;
 
         StartupService.SetStartup(StartupCheck.IsChecked == true);
         SettingsManager.Instance.Save(_settings);
 
         (Application.Current as App)?.ApplyTheme(_selectedTheme);
+        (Application.Current as App)?.ApplyFontSize(_settings.FontSizeLevel);
 
         Close();
     }

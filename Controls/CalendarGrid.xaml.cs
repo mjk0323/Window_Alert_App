@@ -41,6 +41,11 @@ public partial class CalendarGrid : UserControl
 
     public event Action<DateTime>? DateSelected;
 
+    public double NavRightMargin
+    {
+        get => NextMonthBtn.Margin.Right;
+        set => NextMonthBtn.Margin = new Thickness(0, 0, value, 0);
+    }
 
     public CalendarGrid()
     {
@@ -92,9 +97,9 @@ public partial class CalendarGrid : UserControl
         var numText = new TextBlock
         {
             Text = date.Day.ToString(),
-            FontSize = 11,
             HorizontalAlignment = System.Windows.HorizontalAlignment.Center
         };
+        numText.SetResourceReference(TextBlock.FontSizeProperty, "FontSizeSmall");
         if (isSunday)
             numText.SetResourceReference(TextBlock.ForegroundProperty, "UrgentBrush");
         else if (isSaturday)
@@ -105,19 +110,20 @@ public partial class CalendarGrid : UserControl
         if (isToday)
         {
             numText.FontWeight = FontWeights.Bold;
+            var todayText = new TextBlock
+            {
+                Text = date.Day.ToString(),
+                FontWeight = FontWeights.Bold,
+                Foreground = Brushes.White,
+                HorizontalAlignment = System.Windows.HorizontalAlignment.Center,
+                VerticalAlignment = VerticalAlignment.Center
+            };
+            todayText.SetResourceReference(TextBlock.FontSizeProperty, "FontSizeSmall");
             var todayBorder = new Border
             {
                 Width = 22, Height = 22,
                 CornerRadius = new CornerRadius(11),
-                Child = new TextBlock
-                {
-                    Text = date.Day.ToString(),
-                    FontSize = 11,
-                    FontWeight = FontWeights.Bold,
-                    Foreground = Brushes.White,
-                    HorizontalAlignment = System.Windows.HorizontalAlignment.Center,
-                    VerticalAlignment = VerticalAlignment.Center
-                }
+                Child = todayText
             };
             todayBorder.SetResourceReference(Border.BackgroundProperty, "TodayHighlightBrush");
             stack.Children.Add(todayBorder);

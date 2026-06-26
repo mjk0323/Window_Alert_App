@@ -16,4 +16,7 @@ public class AppSettings
     public bool IsGoogleAuthenticated { get; set; } = false;
 
     public string ThemeColor { get; set; } = "Black";
+    public int FontSizeLevel { get; set; } = 0;  // -1=소, 0=기본, 1=대, 2=특대
+    public double NormalWidth { get; set; } = 330;
+    public double NormalHeight { get; set; } = 360;
 }

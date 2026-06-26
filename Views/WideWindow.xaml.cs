@@ -34,7 +34,12 @@ public partial class WideWindow : Window
             }
         };
 
-        Loaded += (_, _) => UpdatePanelForDate(_selectedDate);
+        Loaded += (_, _) =>
+        {
+            UpdatePanelForDate(_selectedDate);
+            if (Application.Current.Resources["FontSizeBase"] is double fs)
+                CalendarColumn.Width = new System.Windows.GridLength(Math.Max(260, 320 + (fs - 12) * 30));
+        };
     }
 
     private void WideCalGrid_DateSelected(DateTime date)

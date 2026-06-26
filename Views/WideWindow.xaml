@@ -37,7 +37,7 @@
         <!-- 메인 콘텐츠 -->
         <Grid>
             <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="320" MinWidth="260"/>
+                <ColumnDefinition x:Name="CalendarColumn" Width="320" MinWidth="260"/>
                 <ColumnDefinition Width="1"/>
                 <ColumnDefinition Width="*"/>
             </Grid.ColumnDefinitions>
@@ -46,6 +46,7 @@
             <controls:CalendarGrid x:Name="WideCalGrid"
                                    Grid.Column="0"
                                    VerticalAlignment="Top"
+                                   NavRightMargin="0"
                                    Margin="8"
                                    DateSelected="WideCalGrid_DateSelected"/>
 

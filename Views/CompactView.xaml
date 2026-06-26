@@ -22,7 +22,7 @@
                 <Button Content="◀" Style="{StaticResource NavArrowStyle}"
                         Command="{Binding PreviousDayCommand}" Padding="6,2" Cursor="Arrow"/>
                 <TextBlock x:Name="DateText" VerticalAlignment="Center"
-                           FontSize="12" FontWeight="SemiBold"
+                           FontSize="{DynamicResource FontSizeBase}" FontWeight="SemiBold"
                            Foreground="{DynamicResource TextPrimaryBrush}"
                            Margin="4,0"/>
                 <Button Content="▶" Style="{StaticResource NavArrowStyle}"
@@ -50,11 +50,11 @@
             </Grid.RowDefinitions>
 
             <ScrollViewer Grid.Row="0" VerticalScrollBarVisibility="Auto"
-                          HorizontalScrollBarVisibility="Disabled" Margin="0,4,0,0">
+                          HorizontalScrollBarVisibility="Disabled" Margin="0,8,0,0">
                 <StackPanel>
                     <!-- 일정 없을 때 -->
                     <TextBlock Text="일정이 없습니다"
-                               FontSize="12"
+                               FontSize="{DynamicResource FontSizeBase}"
                                Foreground="{DynamicResource TextSecondaryBrush}"
                                HorizontalAlignment="Center"
                                Margin="0,16">
@@ -91,14 +91,14 @@
                                     <!-- 시간 -->
                                     <TextBlock Grid.Column="1"
                                                Text="{Binding StartTime, StringFormat=HH:mm}"
-                                               FontSize="11" FontWeight="SemiBold"
+                                               FontSize="{DynamicResource FontSizeSmall}" FontWeight="SemiBold"
                                                Foreground="{DynamicResource AccentLightBrush}"
                                                VerticalAlignment="Center"/>
 
                                     <!-- 제목 (완료 시 취소선) -->
                                     <TextBlock Grid.Column="2"
                                                Text="{Binding Title}"
-                                               FontSize="12"
+                                               FontSize="{DynamicResource FontSizeBase}"
                                                Foreground="{DynamicResource TextPrimaryBrush}"
                                                VerticalAlignment="Center"
                                                TextTrimming="CharacterEllipsis">
@@ -145,7 +145,7 @@
             <Button Grid.Row="2" Content="+ 일정 추가"
                     HorizontalAlignment="Center" VerticalAlignment="Center"
                     Style="{StaticResource ModeButtonStyle}"
-                    Foreground="{DynamicResource AccentBrush}" FontSize="12"
+                    Foreground="{DynamicResource AccentBrush}" FontSize="{DynamicResource FontSizeBase}"
                     Click="AddEvent_Click"/>
         </Grid>
     </Grid>

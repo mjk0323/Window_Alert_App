@@ -87,6 +87,17 @@
                 </StackPanel>
             </StackPanel>
 
+            <!-- 폰트 크기 -->
+            <StackPanel Margin="0,16,0,0">
+                <TextBlock Text="폰트 크기" Foreground="{DynamicResource TextSecondaryBrush}" FontSize="11" Margin="0,0,0,6"/>
+                <StackPanel Orientation="Horizontal">
+                    <RadioButton x:Name="FontSmallRadio"  Content="소"   Style="{StaticResource SettingRadio}" GroupName="FontSize"/>
+                    <RadioButton x:Name="FontMediumRadio" Content="기본" Style="{StaticResource SettingRadio}" GroupName="FontSize"/>
+                    <RadioButton x:Name="FontLargeRadio"  Content="대"   Style="{StaticResource SettingRadio}" GroupName="FontSize"/>
+                    <RadioButton x:Name="FontXLargeRadio" Content="특대" Style="{StaticResource SettingRadio}" GroupName="FontSize"/>
+                </StackPanel>
+            </StackPanel>
+
             <!-- 테마 색상 -->
             <StackPanel Margin="0,16,0,0">
                 <TextBlock Text="테마 색상" Foreground="{DynamicResource TextSecondaryBrush}" FontSize="11" Margin="0,0,0,8"/>
