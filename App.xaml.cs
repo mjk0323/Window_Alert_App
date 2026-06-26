@@ -30,6 +30,7 @@ public partial class App : Application
 
         _settings = SettingsManager.Instance.Load();
         ApplyTheme(_settings.ThemeColor);
+        ApplyFontSize(_settings.FontSizeLevel);
         _calendarService = new GoogleCalendarService();
         _toastService = new ToastNotificationService();
         _scheduler = new NotificationScheduler(_calendarService, _toastService, _settings);
@@ -39,14 +40,15 @@ public partial class App : Application
         _widgetViewModel = new WidgetViewModel(_settings);
         _widgetViewModel.ModeChangeRequested += OnModeChangeRequested;
         _widgetViewModel.RefreshRequested += async () =>
-            await _scheduler.RefreshNowAsync();
+        { try { await _scheduler.RefreshNowAsync(); } catch { } };
 
         _scheduler.EventsRefreshed += events =>
             Dispatcher.Invoke(() => _widgetViewModel.UpdateEvents(events));
 
         _trayManager = new TrayManager(_settings);
         _trayManager.OpenSettingsRequested += OpenSettings;
-        _trayManager.RefreshRequested += async () => await _scheduler.RefreshNowAsync();
+        _trayManager.RefreshRequested += async () =>
+        { try { await _scheduler.RefreshNowAsync(); } catch { } };
         _trayManager.ModeChangeRequested += OnModeChangeRequested;
         _trayManager.WidgetVisibilityChangeRequested += OnWidgetVisibilityChanged;
         _trayManager.Initialize();
@@ -264,6 +266,15 @@ public partial class App : Application
         }
     }
 
+    public void ApplyFontSize(int level)
+    {
+        var res = Current.Resources;
+        res["FontSizeXSmall"] = (double)(10 + level);
+        res["FontSizeSmall"]  = (double)(11 + level);
+        res["FontSizeBase"]   = (double)(12 + level);
+        res["FontSizeLarge"]  = (double)(13 + level);
+    }
+
     public void OpenSettings()
     {
         if (_settingsWindow != null)
@@ -289,6 +300,11 @@ public partial class App : Application
         _cts.Cancel();
         _settings.WidgetLeft = _widgetWindow?.Left ?? _settings.WidgetLeft;
         _settings.WidgetTop = _widgetWindow?.Top ?? _settings.WidgetTop;
+        if (_widgetWindow != null && _settings.Mode == WidgetMode.Normal)
+        {
+            _settings.NormalWidth = _widgetWindow.Width;
+            _settings.NormalHeight = _widgetWindow.Height;
+        }
         SettingsManager.Instance.Save(_settings);
 
         _trayManager.Dispose();
