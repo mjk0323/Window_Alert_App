@@ -52,14 +52,19 @@ public class NotificationScheduler : IAsyncDisposable
 
     private async Task RunPollingLoopAsync(CancellationToken ct)
     {
-        // 시작 시 즉시 1회 폴링
-        await PollAsync(ct);
+        try { await PollAsync(ct); }
+        catch (OperationCanceledException) { return; }
+        catch { }
 
         using var timer = new PeriodicTimer(TimeSpan.FromMinutes(_settings.PollingIntervalMinutes));
         try
         {
             while (await timer.WaitForNextTickAsync(ct))
-                await PollAsync(ct);
+            {
+                try { await PollAsync(ct); }
+                catch (OperationCanceledException) { return; }
+                catch { }
+            }
         }
         catch (OperationCanceledException) { }
     }
