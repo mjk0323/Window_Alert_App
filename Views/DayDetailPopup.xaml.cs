@@ -38,10 +38,10 @@ public partial class DayDetailPopup : Window
             var placeholder = new TextBlock
             {
                 Text = "일정이 없습니다",
-                FontSize = 12,
                 Margin = new Thickness(0, 8, 0, 8),
                 HorizontalAlignment = System.Windows.HorizontalAlignment.Center
             };
+            placeholder.SetResourceReference(TextBlock.FontSizeProperty, "FontSizeBase");
             placeholder.SetResourceReference(TextBlock.ForegroundProperty, "TextSecondaryBrush");
             EventListPanel.Children.Add(placeholder);
             return;
@@ -75,9 +75,10 @@ public partial class DayDetailPopup : Window
         var timeText = new TextBlock
         {
             Text = ev.StartTime.ToString("HH:mm"),
-            FontSize = 11, FontWeight = FontWeights.SemiBold,
+            FontWeight = FontWeights.SemiBold,
             VerticalAlignment = VerticalAlignment.Center
         };
+        timeText.SetResourceReference(TextBlock.FontSizeProperty, "FontSizeSmall");
         timeText.SetResourceReference(TextBlock.ForegroundProperty, "AccentLightBrush");
         Grid.SetColumn(timeText, 1);
         grid.Children.Add(timeText);
@@ -85,10 +86,10 @@ public partial class DayDetailPopup : Window
         var titleText = new TextBlock
         {
             Text = ev.Title,
-            FontSize = 12,
             VerticalAlignment = VerticalAlignment.Center,
             TextTrimming = TextTrimming.CharacterEllipsis
         };
+        titleText.SetResourceReference(TextBlock.FontSizeProperty, "FontSizeBase");
         titleText.SetResourceReference(TextBlock.ForegroundProperty, "TextPrimaryBrush");
         if (ev.IsCompleted)
         {
@@ -146,6 +147,7 @@ public partial class DayDetailPopup : Window
 
     private void OpenEditWindow(CalendarEventViewModel ev)
     {
+        Deactivated -= OnDeactivatedClose;
         var win = new EventEditWindow(_date, ev) { Owner = this };
         if (win.ShowDialog() == true && win.Result != null)
         {
@@ -161,6 +163,8 @@ public partial class DayDetailPopup : Window
                 });
             });
         }
+        Deactivated += OnDeactivatedClose;
+        Activate();
     }
 
     private async Task DeleteEventAsync(CalendarEventViewModel ev)

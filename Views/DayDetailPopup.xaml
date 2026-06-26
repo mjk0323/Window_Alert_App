@@ -30,13 +30,13 @@
                   MouseLeftButtonDown="Header_DragMove" Cursor="SizeAll">
                 <TextBlock x:Name="DateHeader"
                            VerticalAlignment="Center"
-                           FontSize="13" FontWeight="SemiBold"
+                           FontSize="{DynamicResource FontSizeLarge}" FontWeight="SemiBold"
                            Foreground="{DynamicResource TextPrimaryBrush}"/>
                 <Button Content="✕"
                         HorizontalAlignment="Right"
                         Style="{StaticResource IconButtonStyle}"
                         Click="CloseBtn_Click"
-                        FontSize="12" Foreground="{DynamicResource TextSecondaryBrush}"
+                        FontSize="{DynamicResource FontSizeBase}" Foreground="{DynamicResource TextSecondaryBrush}"
                         Cursor="Arrow"/>
             </Grid>
 
@@ -58,7 +58,7 @@
                     VerticalAlignment="Center"
                     Style="{StaticResource ModeButtonStyle}"
                     Foreground="{DynamicResource AccentBrush}"
-                    FontSize="12"
+                    FontSize="{DynamicResource FontSizeBase}"
                     Click="AddEvent_Click"/>
         </Grid>
     </Border>
