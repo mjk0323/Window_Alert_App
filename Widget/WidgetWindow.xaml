@@ -19,14 +19,15 @@
             <DropShadowEffect BlurRadius="16" ShadowDepth="4"
                               Color="#80000000" Opacity="0.5"/>
         </Border.Effect>
-
-        <Grid>
+        <Grid x:Name="ContentGrid">
             <Grid.RowDefinitions>
                 <RowDefinition Height="*"/>
             </Grid.RowDefinitions>
 
             <!-- 콘텐츠 영역 (CompactView / NormalView 교체) -->
-            <ContentPresenter x:Name="ContentArea" Grid.Row="0" Margin="0,4"/>
+            <Viewbox x:Name="ContentViewbox" Grid.Row="0" Margin="0,4" Stretch="None">
+                <ContentPresenter x:Name="ContentArea"/>
+            </Viewbox>
 
         </Grid>
     </Border>
